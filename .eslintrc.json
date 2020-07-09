@@ -1,0 +1,19 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": [
+        "airbnb-base",
+        "stylelint-config-prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "rules": {
+    },
+    "scripts": {
+      "stylelint-check": "stylelint-config-prettier-check"
+    }
+}
