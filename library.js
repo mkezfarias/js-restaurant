@@ -14,8 +14,8 @@ function displayBooks() {
          <input type="checkbox" class="read" ${
            book.read ? "checked" : ""
          }></input>
-         <button class="delete">Delete</button>
-       </div>
+         <button class="delete" id="${book.id}-del">Delete</button>
+       
      </div>
      `;
     })
@@ -23,6 +23,8 @@ function displayBooks() {
 
   container.innerHTML = html;
   container.appendChild(document.createElement("div"));
+  const delbuts = document.querySelectorAll(".delete");
+  delbuts.forEach(butt => butt.addEventListener("click", deleteBook));
   container.dispatchEvent(new CustomEvent("displayBook"));
 }
 
@@ -46,15 +48,14 @@ const button = document.querySelector(".input5");
 const delbuts = document.querySelectorAll(".delete");
 delbuts.forEach(butt => butt.addEventListener("click", deleteBook));
 
-function deleteBook() {
+function deleteBook(e) {
   let itemToDel;
-  window.addEventListener("click", e => {
-    itemToDel = e.target.parentElement.id;
-    console.log(itemToDel);
-    library = library.filter(item => item.id != itemToDel);
-    localStorage.setItem("library", JSON.stringify(library));
-    container.dispatchEvent(new CustomEvent("booksUpdated"));
-  });
+  console.log(e.target);
+  itemToDel = `${e.target.id}`.replace("-del", "");
+  console.log(itemToDel);
+  library = library.filter(item => item.id != itemToDel);
+  localStorage.setItem("library", JSON.stringify(library));
+  container.dispatchEvent(new CustomEvent("booksUpdated"));
 }
 
 const addBook = (tit, auth, pag, isr) => {
@@ -73,5 +74,5 @@ button.addEventListener("click", e => {
   author.value = "";
   pages.value = "";
   read.checked = false;
-  container.dispatchEvent(new CustomEvent("booksUpdated"));
+  container.dispatchEvent();
 });
